@@ -1,32 +1,36 @@
 class Solution {
-    public :
+public:
     int myAtoi(string s) {
-        if(s.length()==0) return 0;
-
-        int i=0;
-         while(i<s.size() && s[i]== ' ') {
-             i++;
-         }     
-        s = s.substr(i); //i ---> last of string
-        
-        int sign = +1;
-        long ans = 0;
-        
-        if(s[0] == '-') sign = -1;
-        
-        int MAX = INT_MAX, MIN = INT_MIN;
-        i = (s[0] == '+' || s[0] == '-') ? 1 : 0;
-		
-        while(i < s.length()) {
-            if(s[0] == ' ' || !isdigit(s[i])) break;
-            
-            ans = ans * 10 + s[i]-'0';
-            if(sign == -1 && -1*ans < MIN) return MIN;
-            if(sign == 1 && ans > MAX) return MAX;
-            
+        long int num=0;
+        if(s.empty())
+        {
+            return 0;
+        }
+        int n=s.length(),i=0;
+        bool sign=false;
+        while(i<n&&s[i]==' ')
+        {
             i++;
         }
-        
-        return (int)(sign*ans);
+        if(i==n)return 0;
+        if (s[i] == '-' || s[i] == '+') {
+            sign = (s[i] == '-');
+            i++;
+        }
+        while('0'<=s[i] && s[i]<='9'&&i<n)
+        {
+            num=(num*10);
+            num=num+(s[i]-'0');
+            if(num>=INT_MAX||num<=INT_MIN)
+            break;
+            i++;
+        }
+        if(sign)
+        {
+            num=num*(-1);
+        }
+        if(num>=INT_MAX)num=INT_MAX;
+        if(num<=INT_MIN)num=INT_MIN;
+        return num;
     }
 };
